@@ -1,7 +1,7 @@
 
 import NotFoundView from '../components/404.vue'
-//import HelloWorld from '@/components/HelloWorld'
-import HelloWorld from '../components/HelloWorld'
+import HelloWorld from '@/components/HelloWorld'
+//import HelloWorld from '../components/HelloWorld'
 
 
 // Routes
