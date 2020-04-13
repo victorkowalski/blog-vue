@@ -8,12 +8,11 @@ export default new Router({
   routes: routes,
   mode: 'history',
   linkExactActiveClass: 'active',
-  scrollBehavior: function(to, from, savedPosition) {
+  scrollBehavior: function (to, from, savedPosition) {
     return savedPosition || { x: 0, y: 0 }
   }
 })
-/*
-export default new Router({
+/* export default new Router({
   routes: [
     {
       path: '/',
@@ -21,4 +20,4 @@ export default new Router({
       component: HelloWorld
     }
   ]
-})*/
+}) */

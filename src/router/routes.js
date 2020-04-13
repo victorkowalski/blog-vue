@@ -1,8 +1,6 @@
-
 import NotFoundView from '../components/404.vue'
 import HelloWorld from '@/components/HelloWorld'
 import LoginView from '@/components/Login.vue'
-
 
 // Routes
 const routes = [
@@ -12,7 +10,7 @@ const routes = [
   },
   {
     path: '/',
-    component: HelloWorld    
+    component: HelloWorld
   }, {
     // not found handler
     path: '*',

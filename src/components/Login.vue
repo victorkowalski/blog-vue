@@ -70,10 +70,7 @@
                 <div class="form-group row mb-0">
                   <div class="col-md-8 offset-md-4">
                     <button type="submit" class="btn btn-primary">Login</button>
-                    <a
-                      class="btn btn-link"
-                      href=""
-                    >Forgot Your Password?</a>                    
+                    <a class="btn btn-link" href="">Forgot Your Password?</a>
                   </div>
                 </div>
               </form>
@@ -86,35 +83,36 @@
 </template>
 
 <script>
-//import api from '../api'
+// import api from '../api'
 
 export default {
-  name: "Login",
-  data(router) {
+  name: 'Login',
+  data (router) {
     return {
-      section: "Login",
-      loading: "",
-      username: "",
-      password: "",
-      response: ""
-    };
+      section: 'Login',
+      loading: '',
+      username: '',
+      password: '',
+      response: ''
+    }
   },
   methods: {
-    checkCreds() {
-      const { username, password } = this;
+    checkCreds () {
+      // const { username, password } = this
 
-      this.toggleLoading();
-      this.resetResponse();
-      this.$store.commit("TOGGLE_LOADING");
+      this.toggleLoading()
+      this.resetResponse()
+      this.$store.commit('TOGGLE_LOADING')
 
       /* Making API call to authenticate a user */
+      /*
       api
-        .request("post", "/login", { username, password })
+        .request('post', '/login', { username, password })
         .then(response => {
           this.toggleLoading();
 
           var data = response.data;
-          /* Checking if error object was returned from the server */
+          /* Checking if error object was returned from the server */ /*
           if (data.error) {
             var errorName = data.error.name;
             if (errorName) {
@@ -129,7 +127,7 @@ export default {
             return;
           }
 
-          /* Setting user in the state and caching record to the localStorage */
+          /* Setting user in the state and caching record to the localStorage */ /*
           if (data.user) {
             var token = "Bearer " + data.token;
 
@@ -151,15 +149,16 @@ export default {
           this.response = "Server appears to be offline";
           this.toggleLoading();
         });
+        */
     },
-    toggleLoading() {
-      this.loading = this.loading === "" ? "loading" : "";
+    toggleLoading () {
+      this.loading = this.loading === '' ? 'loading' : ''
     },
-    resetResponse() {
-      this.response = "";
+    resetResponse () {
+      this.response = ''
     }
   }
-};
+}
 </script>
 
 <style>
