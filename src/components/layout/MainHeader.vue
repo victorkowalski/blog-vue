@@ -1,26 +1,35 @@
 <template>
-  <header class="main-header">
-    <span class="logo-mini">
-      <p>Header Logo</p>
-    </span>
+  <div id="main-header">
     <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
-      <a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+      <div class="container">
+        <router-link class="navbar-brand" to="/">Laravel</router-link>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <!-- Navbar Right Menu -->
-      <!--div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <messages-menu></messages-menu>
-          <notifications-menu></notifications-menu>
-          <tasks-menu></tasks-menu>
-          <user-menu :user="user"></user-menu>
-        </ul>
-      </div-->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Left Side Of Navbar -->
+          <ul class="navbar-nav mr-auto"></ul>
+
+          <!-- Right Side Of Navbar -->
+          <ul class="navbar-nav ml-auto">
+            <!-- Authentication Links -->
+            <router-link class="nav-link" to="/login">Login</router-link>
+            <router-link class="nav-link" to="/register">Register</router-link>
+          </ul>
+        </div>
+      </div>
     </nav>
-  </header>
+  </div>
 </template>
 
 <script>

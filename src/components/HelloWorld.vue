@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <main-header></main-header>
     <h1>{{ msg }}</h1>
     <h2>Ecosystem</h2>
