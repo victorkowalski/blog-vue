@@ -56,7 +56,7 @@
                       name="password-confirm"
                       placeholder="Confirm Password"
                       type="password"
-                      v-model="password_confirm"
+                      v-model="passwordConfirm"
                     />
                   </div>
                 </div>
@@ -75,6 +75,7 @@
 </template>
 
 <script>
+import api from '../api'
 import MainHeader from '@/components/layout/MainHeader'
 
 export default {
@@ -95,10 +96,7 @@ export default {
       const { username, email, password, passwordConfirm } = this
       console.log(username + email + password + passwordConfirm)
 
-      /* api.request('post', '/register', {
-        username,
-        password
-      }) */
+      api.request('post', '/register', { username, email, password, passwordConfirm })
     }
   }
 }
