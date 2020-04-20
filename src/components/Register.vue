@@ -92,8 +92,8 @@ export default {
   },
   methods: {
     register () {
-      // const { username, email, password, passwordConfirm } = this
-    // console.log(username + email + password + password_confirm)
+      const { username, email, password, passwordConfirm } = this
+      console.log(username + email + password + passwordConfirm)
 
       /* api.request('post', '/register', {
         username,
