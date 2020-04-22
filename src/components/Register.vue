@@ -8,6 +8,14 @@
           <div class="card">
             <div class="card-header">Register</div>
             <div class="card-body">
+
+            <p v-if="errors.length">
+              <b>Please correct the following error(s):</b>
+                <ul>
+                  <li v-for="error in errors"  v-bind:key="error">{{ error }}</li>
+                </ul>
+            </p>
+
               <form @submit.prevent="register">
                 <div class="form-group row">
                   <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
@@ -85,6 +93,7 @@ export default {
   },
   data (router) {
     return {
+      errors: [],
       username: '',
       email: '',
       password: '',
@@ -93,10 +102,43 @@ export default {
   },
   methods: {
     register () {
+      this.errors = []
       const { username, email, password, passwordConfirm } = this
+
+      this.validateForm()
+
+      if (this.errors.length > 0) return null
+
       console.log(username + email + password + passwordConfirm)
 
       api.request('post', '/register', { username, email, password, passwordConfirm })
+    },
+    validEmail: function (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
+    },
+    validateForm () {
+      if (!this.username) {
+        this.errors.push('username required.')
+      }
+
+      if (!this.email) {
+        this.errors.push('Email required.')
+      } else if (!this.validEmail(this.email)) {
+        this.errors.push('Valid email required.')
+      }
+
+      if (!this.password) {
+        this.errors.push('password required.')
+      } else if (this.password.length < 5) {
+        this.errors.push('Password must be of minimum 5 characters length')
+      }
+
+      if (!this.passwordConfirm) {
+        this.errors.push('passwordConfirm required.')
+      } else if (this.passwordConfirm !== this.password) {
+        this.errors.push('Password confirmation doesn\'t match Password')
+      }
     }
   }
 }
