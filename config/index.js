@@ -14,9 +14,9 @@ module.exports = {
       '/api': {
         target: 'http://localhost/test/laravel-spa/blog-laravel/public',
         changeOrigin: true,
-        pathRewrite: {
+        /*pathRewrite: {
           '^/api': ''
-        }
+        }*/
       }
     },
 
