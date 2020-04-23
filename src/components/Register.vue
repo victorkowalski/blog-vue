@@ -109,9 +109,11 @@ export default {
 
       if (this.errors.length > 0) return null
 
-      console.log(username + email + password + passwordConfirm)
-
       api.request('post', '/register', { username, email, password, passwordConfirm })
+        .then(response => {
+          console.log(response)
+          // this.toggleLoading()
+        })
     },
     validEmail: function (email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -130,7 +132,7 @@ export default {
 
       if (!this.password) {
         this.errors.push('password required.')
-      } else if (this.password.length < 5) {
+      } else if (this.password.length < 6) {
         this.errors.push('Password must be of minimum 5 characters length')
       }
 
