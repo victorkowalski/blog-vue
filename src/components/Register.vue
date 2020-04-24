@@ -70,7 +70,7 @@
                 </div>
                 <div class="form-group row mb-0">
                   <div class="col-md-6 offset-md-4">
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary btn-lg loading">Register</button>
                   </div>
                 </div>
               </form>
@@ -94,6 +94,7 @@ export default {
   data (router) {
     return {
       errors: [],
+      // loading: '',
       username: '',
       email: '',
       password: '',
@@ -102,6 +103,7 @@ export default {
   },
   methods: {
     register () {
+      // this.toggleLoading()
       this.errors = []
       const { username, email, password, passwordConfirm } = this
 
@@ -113,6 +115,17 @@ export default {
         .then(response => {
           console.log(response)
           // this.toggleLoading()
+          // data: {status: "success", message: "user registered successfully"}
+          // data: {status: "error", message: {…}}
+
+          var data = response.data
+          if (data.status === 'error') {
+            this.errors.push('error, try later')
+          }
+          if (data.status === 'success') {
+            // this.$router.push('/login')
+            this.$router.push({ name: 'login', params: { p_username: username } })
+          }
         })
     },
     validEmail: function (email) {
@@ -142,6 +155,9 @@ export default {
         this.errors.push('Password confirmation doesn\'t match Password')
       }
     }
+    /* toggleLoading () {
+      this.loading = this.loading === '' ? 'loading' : ''
+    } */
   }
 }
 </script>

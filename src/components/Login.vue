@@ -1,12 +1,12 @@
 <template>
   <div id="login">
-    <main-header></main-header>
+    <main-header />
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-8">
           <div class="card">
             <div class="card-header">Login</div>
-
+            <div>User {{ p_username }}</div>
             <div class="card-body">
               <form method="POST" action="login">
                 <div class="form-group row">
@@ -22,6 +22,7 @@
                       required
                       autocomplete="email"
                       autofocus
+                      v-model="username"
                     />
                     <span class="invalid-feedback" role="alert">
                       <strong>message</strong>
@@ -76,6 +77,12 @@ import MainHeader from '@/components/layout/MainHeader'
 
 export default {
   name: 'Login',
+  // props: ['p_username', 'p_password', 'p_message'],
+  props: {
+    p_username: String,
+    p_password: String,
+    p_message: String
+  },
   components: {
     MainHeader
   },
@@ -83,7 +90,8 @@ export default {
     return {
       section: 'Login',
       loading: '',
-      username: '',
+      // username: '',
+      username: this.p_username !== '' ? this.p_username : '',
       password: '',
       response: ''
     }
@@ -152,69 +160,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#login {
-  padding: 10em;
-}
-
-html,
-body,
-.container-table {
-  height: 100%;
-  background-color: #282b30 !important;
-}
-.container-table {
-  display: table;
-  color: white;
-}
-.vertical-center-row {
-  display: table-cell;
-  vertical-align: middle;
-}
-.vertical-20p {
-  padding-top: 20%;
-}
-.vertical-10p {
-  padding-top: 10%;
-}
-.vertical-5p {
-  padding-top: 5%;
-}
-.logo {
-  width: 15em;
-  padding: 3em;
-}
-
-.input-group {
-  padding-bottom: 2em;
-  height: 4em;
-  width: 100%;
-}
-
-.input-group span.input-group-addon {
-  width: 2em;
-  height: 4em;
-}
-
-@media (max-width: 1241px) {
-  .input-group input {
-    height: 4em;
-  }
-}
-@media (min-width: 1242px) {
-  form {
-    padding-left: 20em;
-    padding-right: 20em;
-  }
-
-  .input-group input {
-    height: 6em;
-  }
-}
-
-.input-group-addon i {
-  height: 15px;
-  width: 15px;
-}
-</style>
