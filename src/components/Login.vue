@@ -6,48 +6,38 @@
         <div class="col-md-8">
           <div class="card">
             <div class="card-header">Login</div>
-            <div>User {{ p_username }}</div>
             <div class="card-body">
-              <form method="POST" action="login">
+              <p v-if="errors.length">
+              <b>Please correct the following error(s):</b>
+                <ul>
+                  <li v-for="error in errors"  v-bind:key="error">{{ error }}</li>
+                </ul>
+              </p>
+              <form @submit.prevent="login">
                 <div class="form-group row">
                   <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-
                   <div class="col-md-6">
                     <input
-                      id="email"
-                      type="email"
-                      class="form-control @error('email') is-invalid @enderror"
+                      class="form-control"
                       name="email"
-                      value="email"
-                      required
-                      autocomplete="email"
-                      autofocus
-                      v-model="username"
+                      placeholder="Email"
+                      type="text"
+                      v-model="email"
                     />
-                    <span class="invalid-feedback" role="alert">
-                      <strong>message</strong>
-                    </span>
                   </div>
                 </div>
-
                 <div class="form-group row">
                   <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
                   <div class="col-md-6">
                     <input
-                      id="password"
-                      type="password"
-                      class="form-control @error('password') is-invalid @enderror"
+                      class="form-control"
                       name="password"
-                      required
-                      autocomplete="current-password"
+                      placeholder="Password"
+                      type="password"
+                      v-model="password"
                     />
-                    <span class="invalid-feedback" role="alert">
-                      <strong>message</strong>
-                    </span>
                   </div>
                 </div>
-
                 <div class="form-group row">
                   <div class="col-md-6 offset-md-4">
                     <div class="form-check">
@@ -56,7 +46,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="form-group row mb-0">
                   <div class="col-md-8 offset-md-4">
                     <button type="submit" class="btn btn-primary">Login</button>
@@ -73,13 +62,13 @@
 </template>
 
 <script>
+import api from '../api'
 import MainHeader from '@/components/layout/MainHeader'
 
 export default {
   name: 'Login',
-  // props: ['p_username', 'p_password', 'p_message'],
   props: {
-    p_username: String,
+    p_email: String,
     p_password: String,
     p_message: String
   },
@@ -88,75 +77,79 @@ export default {
   },
   data (router) {
     return {
-      section: 'Login',
-      loading: '',
+      errors: [],
+      // loading: '',
       // username: '',
-      username: this.p_username !== '' ? this.p_username : '',
-      password: '',
+      email: this.p_email !== '' ? this.p_email : '',
+      password: this.p_password !== '' ? this.p_password : '',
+      // password: '',
       response: ''
     }
   },
   methods: {
-    checkCreds () {
-      // const { username, password } = this
-
-      this.toggleLoading()
-      this.resetResponse()
-      this.$store.commit('TOGGLE_LOADING')
+    login () {
+      this.errors = []
+      const { email, password } = this
+      this.validateForm()
+      if (this.errors.length > 0) return null
+      // this.toggleLoading()
+      // this.resetResponse()
+      // this.$store.commit('TOGGLE_LOADING')
 
       /* Making API call to authenticate a user */
-      /*
+
       api
-        .request('post', '/login', { username, password })
+        .request('post', '/login', { email, password })
         .then(response => {
-          this.toggleLoading();
+          console.log(response)
+          // this.toggleLoading()
 
-          var data = response.data;
-          /* Checking if error object was returned from the server */ /*
-          if (data.error) {
-            var errorName = data.error.name;
-            if (errorName) {
-              this.response =
-                errorName === "InvalidCredentialsError"
-                  ? "Username/Password incorrect. Please try again."
-                  : errorName;
-            } else {
-              this.response = data.error;
-            }
-
-            return;
+          var data = response.data
+          /* Checking if error object was returned from the server */
+          if (data.status === 'error') {
+            this.errors.push('Username/Password incorrect. Please try again.')
+            return null
           }
-
-          /* Setting user in the state and caching record to the localStorage */ /*
+          if (data.status === 'success') {
+            this.$router.push('/')
+          }
+          /* Setting user in the state and caching record to the localStorage */
           if (data.user) {
-            var token = "Bearer " + data.token;
+            var token = 'Bearer ' + data.token
 
-            this.$store.commit("SET_USER", data.user);
-            this.$store.commit("SET_TOKEN", token);
+            this.$store.commit('SET_USER', data.user)
+            this.$store.commit('SET_TOKEN', token)
 
             if (window.localStorage) {
-              window.localStorage.setItem("user", JSON.stringify(data.user));
-              window.localStorage.setItem("token", token);
+              window.localStorage.setItem('user', JSON.stringify(data.user))
+              window.localStorage.setItem('token', token)
             }
 
-            this.$router.push(data.redirect ? data.redirect : "/");
+            this.$router.push('/')
           }
         })
         .catch(error => {
-          this.$store.commit("TOGGLE_LOADING");
-          console.log(error);
+          // this.$store.commit('TOGGLE_LOADING')
+          console.log(error)
 
-          this.response = "Server appears to be offline";
-          this.toggleLoading();
-        });
-        */
+          this.response = 'Server appears to be offline'
+          // this.toggleLoading()
+        })
     },
-    toggleLoading () {
+    validateForm () {
+      if (!this.email) {
+        this.errors.push('E-Mail Address required')
+      }
+      if (!this.password) {
+        this.errors.push('Password required')
+      }
+    }
+    /* toggleLoading () {
       this.loading = this.loading === '' ? 'loading' : ''
     },
     resetResponse () {
       this.response = ''
-    }
+    } */
   }
 }
 </script>

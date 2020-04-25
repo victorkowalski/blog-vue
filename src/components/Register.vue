@@ -124,7 +124,8 @@ export default {
           }
           if (data.status === 'success') {
             // this.$router.push('/login')
-            this.$router.push({ name: 'login', params: { p_username: username } })
+            console.log(username + password)
+            this.$router.push({ name: 'login', params: { p_email: email, p_password: password } })
           }
         })
     },
@@ -145,7 +146,7 @@ export default {
 
       if (!this.password) {
         this.errors.push('password required.')
-      } else if (this.password.length < 6) {
+      } else if (this.password.length < 1) {
         this.errors.push('Password must be of minimum 5 characters length')
       }
 
