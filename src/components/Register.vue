@@ -12,7 +12,7 @@
             <p v-if="errors.length">
               <b>Please correct the following error(s):</b>
                 <ul>
-                  <li v-for="error in errors"  v-bind:key="error">{{ error }}</li>
+                  <li v-for="error in errors"  v-bind:key="error"><font color="red"> {{ error }}</font></li>
                 </ul>
             </p>
 
@@ -120,10 +120,12 @@ export default {
 
           var data = response.data
           if (data.status === 'error') {
-            this.errors.push('error, try later')
+            var self = this
+            data.message.forEach(function (item) {
+              self.errors.push(item)
+            })
           }
           if (data.status === 'success') {
-            // this.$router.push('/login')
             console.log(username + password)
             this.$router.push({ name: 'login', params: { p_email: email, p_password: password } })
           }
