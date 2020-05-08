@@ -12,7 +12,7 @@
             <p v-if="errors.length">
               <b>Please correct the following error(s):</b>
                 <ul>
-                  <li v-for="error in errors"  v-bind:key="error"><font color="red"> {{ error }}</font></li>
+                  <li v-for="error in errors"  v-bind:key="error"><font color="red">{{ error }}</font></li>
                 </ul>
             </p>
 
@@ -149,7 +149,7 @@ export default {
       if (!this.password) {
         this.errors.push('password required.')
       } else if (this.password.length < 1) {
-        this.errors.push('Password must be of minimum 5 characters length')
+        // temp this.errors.push('Password must be of minimum 5 characters length')
       }
 
       if (!this.passwordConfirm) {

@@ -1,4 +1,4 @@
-import NotFoundView from '../components/404.vue'
+import NotFoundView from '@/components/404.vue'
 import HelloWorld from '@/components/HelloWorld'
 import LoginView from '@/components/Login.vue'
 import RegisterView from '@/components/Register.vue'
@@ -17,7 +17,8 @@ const routes = [
   },
   {
     path: '/',
-    component: HelloWorld
+    component: HelloWorld,
+    meta: { requiresAuth: true }
   }, {
     // not found handler
     path: '*',

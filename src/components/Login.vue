@@ -10,7 +10,7 @@
               <p v-if="errors.length">
               <b>Please correct the following error(s):</b>
                 <ul>
-                  <li v-for="error in errors"  v-bind:key="error">{{ error }}</li>
+                  <li v-for="error in errors"  v-bind:key="error"><font color="red">{{ error }}</font></li>
                 </ul>
               </p>
               <form @submit.prevent="login">
