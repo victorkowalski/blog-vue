@@ -111,22 +111,21 @@ export default {
             return null
           }
           if (data.status === 'success') {
-            this.$router.push('/')
+            if (data.user) {
+              var token = 'Bearer ' + data.user.access_token.token
+
+              this.$store.commit('SET_USER', data.user)
+              this.$store.commit('SET_TOKEN', token)
+
+              if (window.localStorage) {
+                window.localStorage.setItem('user', JSON.stringify(data.user))
+                window.localStorage.setItem('token', token)
+              }
+
+              this.$router.push('/')
+            }
           }
           /* Setting user in the state and caching record to the localStorage */
-          if (data.user) {
-            var token = 'Bearer ' + data.token
-
-            this.$store.commit('SET_USER', data.user)
-            this.$store.commit('SET_TOKEN', token)
-
-            if (window.localStorage) {
-              window.localStorage.setItem('user', JSON.stringify(data.user))
-              window.localStorage.setItem('token', token)
-            }
-
-            this.$router.push('/')
-          }
         })
         .catch(error => {
           // this.$store.commit('TOGGLE_LOADING')
