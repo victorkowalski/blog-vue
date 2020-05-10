@@ -48,7 +48,10 @@
                 </div>
                 <div class="form-group row mb-0">
                   <div class="col-md-8 offset-md-4">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary btn-lg" :disabled="loading">
+                      <span v-if="loading" class="spinner-border spinner-border-sm"></span>
+                      Login
+                    </button>
                     <a class="btn btn-link" href>Forgot Your Password?</a>
                   </div>
                 </div>
@@ -78,7 +81,7 @@ export default {
   data (router) {
     return {
       errors: [],
-      // loading: '',
+      loading: false,
       // username: '',
       email: this.p_email !== '' ? this.p_email : '',
       password: this.p_password !== '' ? this.p_password : '',
@@ -92,17 +95,18 @@ export default {
       const { email, password } = this
       this.validateForm()
       if (this.errors.length > 0) return null
-      // this.toggleLoading()
+
+      this.toggleLoading()
+
       // this.resetResponse()
-      // this.$store.commit('TOGGLE_LOADING')
+      this.$store.commit('TOGGLE_LOADING')
 
       /* Making API call to authenticate a user */
 
       api
         .request('post', '/login', { email, password })
         .then(response => {
-          console.log(response)
-          // this.toggleLoading()
+          this.toggleLoading()
 
           var data = response.data
           /* Checking if error object was returned from the server */
@@ -128,11 +132,11 @@ export default {
           /* Setting user in the state and caching record to the localStorage */
         })
         .catch(error => {
-          // this.$store.commit('TOGGLE_LOADING')
+          this.$store.commit('TOGGLE_LOADING')
           console.log(error)
 
           this.response = 'Server appears to be offline'
-          // this.toggleLoading()
+          this.toggleLoading()
         })
     },
     validateForm () {
@@ -142,11 +146,11 @@ export default {
       if (!this.password) {
         this.errors.push('Password required')
       }
-    }
-    /* toggleLoading () {
-      this.loading = this.loading === '' ? 'loading' : ''
     },
-    resetResponse () {
+    toggleLoading () {
+      this.loading = !this.loading
+    }
+    /* resetResponse () {
       this.response = ''
     } */
   }

@@ -24,7 +24,7 @@
           <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
             <router-link v-if="!isLoggedIn" class="nav-link" to="/login">Login</router-link>
-            <router-link class="nav-link" to="/register">Register</router-link>
+            <router-link v-if="!isLoggedIn" class="nav-link" to="/register">Register</router-link>
             <!--div class="nav-link" @click="logout">Logout</div-->
             <span v-if="isLoggedIn" class="nav-link">
               <a href="#" @click="logout">Logout</a>
