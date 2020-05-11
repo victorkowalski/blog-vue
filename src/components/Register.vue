@@ -104,7 +104,7 @@ export default {
   methods: {
     register () {
       // this.toggleLoading()
-      this.errors = []
+      // this.errors = []
       const { username, email, password, passwordConfirm } = this
 
       this.validateForm()
