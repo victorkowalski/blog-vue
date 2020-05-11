@@ -1,8 +1,10 @@
 import axios from 'axios'
 import config from '../config'
+import store from '../store'
 
 export default {
-  request(method, uri, data = null) {
+
+  request (method, uri, data = null) {
     if (!method) {
       console.error('API function call requires method argument')
       return
@@ -14,13 +16,11 @@ export default {
     }
 
     var url = config.serverURI + uri
+
+    if (store.state.token) {
+      axios.defaults.headers.common['Authorization'] = store.state.token
+    }
+
     return axios({ method, url, data })
   }
 }
-/*
-axios({
-  method: 'post', // Or GET
-  url: this.$root.api.get_featured,
-  headers: { 'Authorization': 'Bearer ' + this.$root.api.access_token } // Cookies.get('Token')
-})
-*/

@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     getData () {
-      api.request('get', '/index', {})
+      api.request('get', '/index')
         .then(response => {
           console.log(response)
           // this.toggleLoading()
