@@ -17,6 +17,7 @@
     "axios": "^0.19.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vue-social-auth": "^1.4.3",
     "vuex": "^2.0.0",
     "vuex-router-sync": "^4.1.2"
   },

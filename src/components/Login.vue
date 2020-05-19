@@ -56,6 +56,12 @@
                   </div>
                 </div>
               </form>
+              <div class="form-group row mb-0">
+                  <div class="col-md-8 offset-md-4">
+                    <button @click="AuthProvider('google')">auth Google</button>
+                    <button @click="AuthProvider('github')">auth Github</button>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
@@ -65,8 +71,20 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import api from '../api'
 import MainHeader from '@/components/layout/MainHeader'
+import VueSocialauth from 'vue-social-auth'
+
+Vue.use(VueSocialauth, {
+
+  providers: {
+    google: {
+      clientId: '',
+      redirectUri: '/auth/github/callback' // Your client app URL
+    }
+  }
+})
 
 export default {
   name: 'Login',
@@ -149,10 +167,25 @@ export default {
     },
     toggleLoading () {
       this.loading = !this.loading
-    }
+    },
     /* resetResponse () {
       this.response = ''
     } */
+    AuthProvider (provider) {
+      // var self = this
+      this.$auth.authenticate(provider).then(response => {
+        this.SocialLogin(provider, response)
+      }).catch(err => {
+        console.log({err: err})
+      })
+    },
+    SocialLogin (provider, response) {
+      this.$http.post('/sociallogin/' + provider, response).then(response => {
+        console.log(response.data)
+      }).catch(err => {
+        console.log({err: err})
+      })
+    }
   }
 }
 </script>

@@ -19,10 +19,17 @@ const routes = [
     path: '/',
     component: HelloWorld,
     meta: { requiresAuth: true }
-  }, {
+  },
+  {
     // not found handler
     path: '*',
     component: NotFoundView
+  },
+  {
+    path: '/auth/:provider/callback',
+    component: {
+      template: '<div class="auth-component"></div>'
+    }
   }
 ]
 
